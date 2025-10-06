@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Ticket Homepage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1efe7 0%, #f3f4f6 100%);
+            color: #1f2937;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(120deg, #f1efe7 0%, #d5d3cc 100%);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            max-height: 120px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 220px;
+            height: 100px;
+            background: linear-gradient(135deg, #221cda 0%, #2563eb 100%);
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            color: #1f2937;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .user-info a {
+            color: #221cda;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-info a:hover {
+            color: #2563eb;
+        }
+
+        .logout-icon {
+            font-size: 16px;
+        }
+
+        .navigation {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .nav-item {
+            display: inline-block;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 400;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            color: #2563eb;
+            opacity: 1;
+        }
+
+        .home-link {
+            color: #221cda;
+            opacity: 1;
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .welcome-title {
+            font-size: 30px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .total-tickets-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+
+        .completed-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .planned-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .students-icon {
+            background: linear-gradient(135deg, #221cda 0%, #2563eb 100%);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 30px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .two-column-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .activity-section,
+        .deadlines-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .activity-title,
+        .deadlines-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-icon,
+        .deadlines-icon {
+            font-size: 22px;
+            color: #221cda;
+        }
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .activity-item:hover {
+            background: #f3f4f6;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-name {
+            font-weight: 400;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .activity-desc {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .deadline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: background-color 0.2s ease;
+        }
+
+        .deadline-item:hover {
+            background: #f3f4f6;
+        }
+
+        .deadline-details {
+            flex: 1;
+        }
+
+        .deadline-name {
+            font-weight: 400;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .deadline-date {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .status-open {
+            background: #10b981;
+        }
+
+        .status-completed {
+            background: #3b82f6;
+        }
+
+        .status-planned {
+            background: #f59e0b;
+        }
+
+        .quick-actions-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .quick-actions-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .actions-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .action-button {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 400;
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .action-button:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            opacity: 1;
+        }
+
+        .add-ticket-btn {
+            background: linear-gradient(120deg, #221cda 0%, #2563eb 100%);
+        }
+
+        .students-overview-btn {
+            background: linear-gradient(120deg, #10b981 0%, #059669 100%);
+        }
+
+        .manage-subjects-btn {
+            background: linear-gradient(120deg, #f59e0b 0%, #d97706 100%);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">LOGO</div>
+        </div>
+        <h1 class="main-title">Ticketbeheer</h1>
+        <div class="user-info">
+            <span>Docent</span>
+            <a href="#">
+                <span class="logout-icon">🚪</span>
+                Uitloggen
+            </a>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="nav-link home-link">
+                    <span class="nav-icon">🏠</span>
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="tickets.html" class="nav-link">
+                    <span class="nav-icon">📄</span>
+                    Tickets
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="nav-icon">👤</span>
+                    Profile
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <section class="welcome-section">
+            <h2 class="welcome-title">Welkom bij Ticketbeheer</h2>
+            <p class="welcome-text">Beheer vakken, opdrachten en studenten planningen met gemak</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon total-tickets-icon">📄</div>
+                    <p class="stat-label">Totaal Tickets</p>
+                    <p class="stat-number">24</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon completed-icon">✅</div>
+                    <p class="stat-label">Afgerond</p>
+                    <p class="stat-number">8</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon planned-icon">📅</div>
+                    <p class="stat-label">Gepland</p>
+                    <p class="stat-number">10</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon students-icon">👥</div>
+                    <p class="stat-label">Studenten</p>
+                    <p class="stat-number">40</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="two-column-grid">
+            <section class="activity-section">
+                <h3 class="activity-title">
+                    <span class="activity-icon">📄</span>
+                    Recente Activiteit
+                </h3>
+                <div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p class="activity-name">PHP Project</p>
+                            <p class="activity-desc">Ticket aangemaakt</p>
+                        </div>
+                        <span class="activity-time">2 uur geleden</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p class="activity-name">Yahtzee</p>
+                            <p class="activity-desc">Status gewijzigd naar gepland</p>
+                        </div>
+                        <span class="activity-time">5 uur geleden</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <p class="activity-name">Engels Examen</p>
+                            <p class="activity-desc">Afgerond</p>
+                        </div>
+                        <span class="activity-time">1 dag geleden</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="deadlines-section">
+                <h3 class="deadlines-title">
+                    <span class="deadlines-icon">📅</span>
+                    Aankomende Deadlines
+                </h3>
+                <div>
+                    <div class="deadline-item">
+                        <div class="deadline-details">
+                            <p class="deadline-name">PHP Project</p>
+                            <p class="deadline-date">20-10-2025</p>
+                        </div>
+                        <span class="status-open">Open</span>
+                    </div>
+                    <div class="deadline-item">
+                        <div class="deadline-details">
+                            <p class="deadline-name">Engels Examen</p>
+                        </div>
+                        <span class="status-afgerond">Afgerond</span>
+                    </div>
+                    <div class="deadline-item">
+                        <div class="deadline-details">
+                            <p class="deadline-name">Yahtzee Project</p>
+                            <p class="deadline-date">09-01-2026</p>
+                        </div>
+                        <span class="status-badge status-planned">Gepland</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="quick-actions-section">
+            <h3 class="quick-actions-title">Snelle Acties</h3>
+            <div class="actions-grid">
+                <a href="#" class="nieuw-ticket">Nieuw Ticket Toevoegen</a>
+                <a href="#" class="student-overzicht">Studenten Overzicht</a>
+                <a href="#" class="beheer-vlak">Vakken Beheren</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
