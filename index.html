@@ -42,19 +42,12 @@
             align-items: center;
         }
 
-        .logo {
+         header img.logo {
             width: 220px;
             height: 100px;
-            background: linear-gradient(135deg, #221cda 0%, #2563eb 100%);
+            object-fit: contain;
             border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            border: 2px solid #ffffff20;
         }
 
         .main-title {
@@ -421,8 +414,7 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo-container">
-            <div class="logo">LOGO</div>
+        <img src="logo.png" alt="School Logo" class="logo">
         </div>
         <h1 class="main-title">Ticketbeheer</h1>
         <div class="user-info">

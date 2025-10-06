@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketbeheer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f1efe7, #f3f4f6);
+            color: #1f2937;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(120deg, #f1efe7, #d5d3cc);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            max-height: 120px;
+        }
+
+        header img.logo {
+            width: 220px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid #ffffff20;
+        }
+
+        header h1 {
+            font-size: 24px;
+            color: #1f2937;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .docent-info {
+            font-size: 14px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .docent-info a {
+            color: #221cda;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .docent-info a:hover {
+            color: #2563eb;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 400;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            opacity: 0.8;
+        }
+
+        nav ul li a:hover {
+            color: #2563eb;
+            opacity: 1;
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .form-container h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1f2937;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .form-container p {
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f9fafb;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .form-buttons button {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .form-buttons button:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .form-buttons .save-btn {
+            background-color: #221cda;
+            color: white;
+        }
+
+        .form-buttons .cancel-btn {
+            background-color: #9ca3af;
+            color: white;
+        }
+
+        .ticket-list {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ticket-list h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #1f2937;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 15px;
+            color: white;
+            font-size: 12px;
+            font-weight: 400;
+            display: inline-block;
+            opacity: 0.9;
+        }
+
+        .status-open {
+            background-color: #34d399;
+        }
+
+        .status-planned {
+            background-color: #ffa963;
+        }
+
+        .status-completed {
+            background-color: #4178d7;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .actions a {
+            margin: 0 8px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #4b5563;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .actions a:hover {
+            opacity: 1;
+        }
+
+        .actions a.edit:hover {
+            color: #60a5fa;
+        }
+
+        .actions a.delete:hover {
+            color: #ef4444;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #6b7280;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="fotos/logo.png" alt="School Logo" class="logo">
+        <h1>Ticketbeheer</h1>
+        <div class="docent-info">
+            <span>Docent</span>
+            <a href="#">Uitloggen</a>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tickets.html">Tickets</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="form-container">
+            <h2>Ticket Toevoegen of Bewerken</h2>
+            <p>Gebruik dit formulier om een nieuw ticket toe te voegen of een bestaand ticket te bewerken.</p>
+            <form>
+                <div class="form-group">
+                    <label for="class">Klas</label>
+                    <select id="class" name="class">
+                        <option value="class-a">Klas A</option>
+                        <option value="class-b">Klas B</option>
+                        <option value="class-c">Klas C</option>
+                        <option value="class-d">Klas D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="student">Student</label>
+                    <select id="student" name="student">
+                        <option value="student-1">Guillian Anyanwuuuuu</option>
+                        <option value="student-2">Guillian Anyanwuuuuuu</option>
+                        <option value="student-3">Mario Busby</option>
+                        <option value="student-4">Mario Busbyy</option>
+                        <option value="student-5">Pheadon Cameronnnnn</option>
+                        <option value="student-6">Pheadon Cameronnnn</option>
+                        <option value="student-7">Chassidy Doestttt</option>
+                        <option value="student-8">Chassidy Doesttttt</option>
+                        <option value="student-9">Ronaldo Hekkkk</option>
+                        <option value="student-10">Ronaldo Hekkk</option>
+                        <option value="student-11">Rick Maliiiiiiii</option>
+                        <option value="student-12">Rick Maliiiiiii</option>
+                        <option value="student-13">Yshan Ho</option>
+                        <option value="student-14">Youssuf El Fakiri</option>
+                        <option value="student-15">Dinand Van Unen</option>
+                        <option value="student-16">Jahro Van Der Berg</option>
+                        <option value="student-17">Lebron James</option>
+                        <option value="student-18">Justin Bieber</option>
+                        <option value="student-19">Michael Jordan</option>
+                        <option value="student-20">George Floyd</option>
+                        <option value="student-21">Cardi B</option>
+                        <option value="student-22">Drake</option>
+                        <option value="student-23">Travis Scott</option>
+                        <option value="student-24">Playboi Carti</option>
+                        <option value="student-25">Kai Cenat</option>
+                        <option value="student-26">Rakai</option>
+                        <option value="student-27">Stephen Curry</option>
+                        <option value="student-28">Banaan Met Mayo</option>
+                        <option value="student-29">Kylie Jenner</option>
+                        <option value="student-30">P Diddy</option>
+                        <option value="student-31">Beyoncé</option>
+                        <option value="student-32">Rihanna</option>
+                        <option value="student-33">Taylor Swift</option>
+                        <option value="student-34">Kanye West</option>
+                        <option value="student-35">Adele</option>
+                        <option value="student-36">Elon Musk</option>
+                        <option value="student-37">Ariana Grande</option>
+                        <option value="student-38">Chris Brown</option>
+                        <option value="student-39">Selena Gomez</option>
+                        <option value="student-40">Nicki Minaj</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Titel Ticket</label>
+                    <input type="text" id="title" name="title" placeholder="Voer de titel van het ticket in">
+                </div>
+                <div class="form-group">
+                    <label for="description">Beschrijving</label>
+                    <textarea id="description" name="description" placeholder="Voer de beschrijving in"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" name="deadline" placeholder="Voer de deadline in">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option value="open">Open</option>
+                        <option value="planned">Is gepland</option>
+                        <option value="completed">Afgerond</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button class="save-btn" type="button">Opslaan</button>
+                    <button class="cancel-btn" type="button">Annuleren</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="ticket-list">
+            <h2>Lijst van Tickets</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Beschrijving</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Acties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Titel">PHP</td>
+                        <td data-label="Beschrijving">Project</td>
+                        <td data-label="Deadline">20-10-2025</td>
+                        <td data-label="Status"><span class="status status-open">Open</span></td>
+                        <td data-label="Acties" class="actions">
+                            <a href="#" class="edit">🖋️</a>
+                            <a href="#" class="delete">🗑</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Titel">Yahtzee</td>
+                        <td data-label="Beschrijving">Project</td>
+                        <td data-label="Deadline">09-01-2026</td>
+                        <td data-label="Status"><span class="status status-planned">Is gepland</span></td>
+                        <td data-label="Acties" class="actions">
+                            <a href="#" class="edit">🖋️</a>
+                            <a href="#" class="delete">🗑</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Titel">Engels</td>
+                        <td data-label="Beschrijving">Examen</td>
+                        <td data-label="Deadline">30-08-2025</td>
+                        <td data-label="Status"><span class="status status-completed">Afgerond</span></td>
+                        <td data-label="Acties" class="actions">
+                            <a href="#" class="edit">🖋️</a>
+                            <a href="#" class="delete">🗑</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Titel">Fullstack</td>
+                        <td data-label="Beschrijving">Project</td>
+                        <td data-label="Deadline">10-05-2026</td>
+                        <td data-label="Status"><span class="status status-open">Open</span></td>
+                        <td data-label="Acties" class="actions">
+                            <a href="#" class="edit">🖋️</a>
+                            <a href="#" class="delete">🗑</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    
+</body>
+</html>
