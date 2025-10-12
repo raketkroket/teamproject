@@ -284,8 +284,28 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 192px;
-            overflow-y: auto;
+            max-height: 300px;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #9ca3af transparent;
+        }
+
+        /* For Webkit browsers (Chrome/Safari) */
+        .students-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .students-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .students-list::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 3px;
+        }
+
+        .students-list::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
         }
 
         .student-item {
@@ -390,11 +410,13 @@
         .add-student-form {
             display: flex;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-top: 16px;
+            align-items: center;
         }
 
         .add-student-input {
             flex: 1;
+            min-width: 0; /* Prevents flex item from overflowing */
         }
 
         .add-student-btn {
@@ -408,6 +430,8 @@
             align-items: center;
             gap: 8px;
             transition: box-shadow 0.3s ease;
+            white-space: nowrap; /* Keeps button text on one line */
+            flex-shrink: 0; /* Prevents button from shrinking */
         }
 
         .add-student-btn:hover {
@@ -579,7 +603,7 @@
                 <div class="students-list">
                     <div class="student-item">
                         <span>Guillian Anyanwu</span>
-                        <a href="delete_student.php?class=class-a&id=student-1" class="delete-student-btn">
+                        <a href="delete_student.php?class=class-a&id=student-1" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
                             <svg width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M3 6h18v2H3z"/>
                                 <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
@@ -590,7 +614,7 @@
                     </div>
                     <div class="student-item">
                         <span>Mario Busby</span>
-                        <a href="delete_student.php?class=class-a&id=student-3" class="delete-student-btn">
+                        <a href="delete_student.php?class=class-a&id=student-3" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
                             <svg width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M3 6h18v2H3z"/>
                                 <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
@@ -599,10 +623,9 @@
                             </svg>
                         </a>
                     </div>
-                    <!-- Add more students as needed, or PHP loop here -->
                     <div class="student-item">
                         <span>Pheadon Cameron</span>
-                        <a href="delete_student.php?class=class-a&id=student-5" class="delete-student-btn">
+                        <a href="delete_student.php?class=class-a&id=student-5" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
                             <svg width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M3 6h18v2H3z"/>
                                 <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
@@ -611,7 +634,83 @@
                             </svg>
                         </a>
                     </div>
-                    <!-- ... (abbreviated for brevity; add all 10) -->
+                    <div class="student-item">
+                        <span>Chassidy Doest</span>
+                        <a href="delete_student.php?class=class-a&id=student-7" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Ronaldo Hek</span>
+                        <a href="delete_student.php?class=class-a&id=student-9" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Rick Mali</span>
+                        <a href="delete_student.php?class=class-a&id=student-11" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Yshan Ho</span>
+                        <a href="delete_student.php?class=class-a&id=student-13" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Youssuf El Fakiri</span>
+                        <a href="delete_student.php?class=class-a&id=student-14" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Dinand Van Unen</span>
+                        <a href="delete_student.php?class=class-a&id=student-15" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Jahro Van Der Berg</span>
+                        <a href="delete_student.php?class=class-a&id=student-16" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 <!-- Inline add student form for this class -->
                 <form action="add_student.php" method="post" class="add-student-form">
@@ -627,7 +726,6 @@
                 </form>
             </div>
 
-            <!-- Repeat for other classes: Class B, C, D with similar structure -->
             <!-- Class B -->
             <div class="class-card">
                 <div class="class-header">
@@ -666,7 +764,7 @@
                     <!-- Students for Class B -->
                     <div class="student-item">
                         <span>Lebron James</span>
-                        <a href="delete_student.php?class=class-b&id=student-17" class="delete-student-btn">
+                        <a href="delete_student.php?class=class-b&id=student-17" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
                             <svg width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M3 6h18v2H3z"/>
                                 <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
@@ -675,7 +773,105 @@
                             </svg>
                         </a>
                     </div>
-                    <!-- ... add others -->
+                    <div class="student-item">
+                        <span>Kobe Bryant</span>
+                        <a href="delete_student.php?class=class-b&id=student-18" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Michael Jordan</span>
+                        <a href="delete_student.php?class=class-b&id=student-19" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Shaquille O'Neal</span>
+                        <a href="delete_student.php?class=class-b&id=student-20" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Magic Johnson</span>
+                        <a href="delete_student.php?class=class-b&id=student-21" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Larry Bird</span>
+                        <a href="delete_student.php?class=class-b&id=student-22" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Bill Russell</span>
+                        <a href="delete_student.php?class=class-b&id=student-23" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Wilt Chamberlain</span>
+                        <a href="delete_student.php?class=class-b&id=student-24" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Kareem Abdul-Jabbar</span>
+                        <a href="delete_student.php?class=class-b&id=student-25" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="student-item">
+                        <span>Tim Duncan</span>
+                        <a href="delete_student.php?class=class-b&id=student-26" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
+                            <svg width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3z"/>
+                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
+                                <path d="M9 11v6"/>
+                                <path d="M15 11v6"/>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 <form action="add_student.php" method="post" class="add-student-form">
                     <input type="hidden" name="class_id" value="class-b">
