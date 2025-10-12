@@ -40,7 +40,13 @@
             display: flex;
             align-items: center;
         }
-
+  header img.logo {
+            width: 220px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid #ffffff20;
+        }
         .logo-box {
             width: 220px;
             height: 100px;
@@ -545,10 +551,9 @@
 <body>
     <!-- Student Header -->
     <header class="top-bar">
-        <div class="logo-area">
-            <div class="logo-box">
-                <span class="logo-text">LOGO</span>
-            </div>
+        <div class="logo-container">
+            <img src="logo.png" alt="School Logo" class="logo">
+        </div>
         </div>
 
         <h1 class="page-title">Mijn Planning</h1>
