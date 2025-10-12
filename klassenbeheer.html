@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klassen Beheer - Ticketbeheer</title>
+    <title>Teacher Ticket Homepage</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -134,7 +134,7 @@
             margin: 0 auto;
         }
 
-        .page-header {
+        .welcome-box {
             background: white;
             padding: 32px;
             border-radius: 12px;
@@ -142,21 +142,21 @@
             margin-bottom: 32px;
         }
 
-        .header-flex {
+        .header-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 24px;
         }
 
-        .page-heading {
+        .welcome-heading {
             font-size: 30px;
             font-weight: 500;
             color: #1f2937;
             margin-bottom: 8px;
         }
 
-        .page-subheading {
+        .welcome-paragraph {
             color: #6b7280;
             font-size: 16px;
         }
@@ -172,6 +172,8 @@
             text-decoration: none;
             font-weight: 400;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .add-class-btn:hover {
@@ -180,30 +182,27 @@
         }
 
         .classes-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 24px;
         }
 
         @media (min-width: 768px) {
             .classes-grid {
-                flex-direction: row;
-                flex-wrap: wrap;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        .class-card {
+        .class-box {
             background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
             padding: 24px;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
             transition: box-shadow 0.3s ease;
-            flex: 1;
-            min-width: 300px;
         }
 
-        .class-card:hover {
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        .class-box:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .class-header {
@@ -239,9 +238,10 @@
             font-size: 20px;
             font-weight: 500;
             color: #1f2937;
+            margin-bottom: 4px;
         }
 
-        .class-count {
+        .class-details p {
             font-size: 14px;
             color: #6b7280;
         }
@@ -251,61 +251,38 @@
             gap: 8px;
         }
 
-        .edit-btn, .delete-btn {
+        .action-btn {
             padding: 8px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: background-color 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .edit-btn {
-            color: #2563eb;
-            background: rgba(37, 99, 235, 0.1);
+            color: #3b82f6;
+            background: transparent;
         }
 
         .edit-btn:hover {
-            background: rgba(37, 99, 235, 0.2);
+            background: #eff6ff;
         }
 
         .delete-btn {
             color: #ef4444;
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .students-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 300px;
-            overflow-y: scroll;
-            scrollbar-width: thin;
-            scrollbar-color: #9ca3af transparent;
-        }
-
-        /* For Webkit browsers (Chrome/Safari) */
-        .students-list::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .students-list::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .students-list::-webkit-scrollbar-thumb {
-            background: #9ca3af;
-            border-radius: 3px;
+        .delete-btn:hover {
+            background: #fef2f2;
         }
 
-        .students-list::-webkit-scrollbar-thumb:hover {
-            background: #6b7280;
+        .students-list {
+            max-height: 192px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .student-item {
@@ -320,28 +297,68 @@
         }
 
         .no-students {
+            text-align: center;
+            padding: 16px;
             font-size: 14px;
             color: #9ca3af;
             font-style: italic;
-            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
             padding: 16px;
         }
 
-        /* Forms for Add/Edit - Static sections for PHP submission */
-        .form-section {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-top: 24px;
-            border: 1px solid #e5e7eb;
+        .modal.show {
+            display: flex;
         }
 
-        .form-title {
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            max-width: 512px;
+            width: 100%;
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .edit-modal .modal-content {
+            max-width: 768px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
             font-size: 20px;
             font-weight: 500;
             color: #1f2937;
-            margin-bottom: 16px;
+        }
+
+        .close-btn {
+            color: #9ca3af;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #1f2937;
         }
 
         .form-group {
@@ -363,108 +380,102 @@
             border-radius: 8px;
             font-family: inherit;
             font-size: 14px;
-            transition: border-color 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .form-input:focus {
             outline: none;
             border-color: #221cda;
+            box-shadow: 0 0 0 3px rgba(34, 28, 218, 0.1);
         }
 
-        .button-group {
+        .btn-group {
             display: flex;
             gap: 12px;
         }
 
-        .submit-btn, .cancel-btn {
-            padding: 12px 24px;
+        .primary-btn {
+            flex: 1;
+            padding: 12px;
+            background: linear-gradient(to right, #221cda, #2563eb);
+            color: white;
             border-radius: 8px;
             border: none;
             font-weight: 400;
             cursor: pointer;
             transition: box-shadow 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
         }
 
-        .submit-btn {
-            background: linear-gradient(to right, #221cda, #2563eb);
-            color: white;
-        }
-
-        .submit-btn:hover {
+        .primary-btn:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        .cancel-btn {
-            background: #d1d5db;
+        .secondary-btn {
+            flex: 1;
+            padding: 12px;
+            background: #f3f4f6;
             color: #374151;
+            border-radius: 8px;
+            border: none;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .cancel-btn:hover {
-            background: #9ca3af;
-            color: white;
+        .secondary-btn:hover {
+            background: #e5e7eb;
         }
 
-        .add-student-form {
+        .add-student-group {
             display: flex;
             gap: 12px;
-            margin-top: 16px;
-            align-items: center;
-        }
-
-        .add-student-input {
-            flex: 1;
-            min-width: 0; /* Prevents flex item from overflowing */
+            margin-bottom: 16px;
         }
 
         .add-student-btn {
-            padding: 12px 16px;
+            padding: 12px 24px;
             background: linear-gradient(to right, #10b981, #059669);
             color: white;
             border-radius: 8px;
             border: none;
+            font-weight: 400;
             cursor: pointer;
+            transition: box-shadow 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: box-shadow 0.3s ease;
-            white-space: nowrap; /* Keeps button text on one line */
-            flex-shrink: 0; /* Prevents button from shrinking */
         }
 
         .add-student-btn:hover {
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
-        .students-form-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .students-edit-list {
             max-height: 256px;
             overflow-y: auto;
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 12px;
-            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .student-form-item {
+        .student-edit-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            background: white;
+            padding: 12px;
+            background: #f9fafb;
             border-radius: 8px;
             transition: background-color 0.2s ease;
         }
 
-        .student-form-item:hover {
+        .student-edit-item:hover {
             background: #f3f4f6;
         }
 
-        .delete-student-btn {
+        .remove-student-btn {
             color: #ef4444;
             background: none;
             border: none;
@@ -474,8 +485,8 @@
             transition: background-color 0.2s ease;
         }
 
-        .delete-student-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
+        .remove-student-btn:hover {
+            background: #fef2f2;
         }
 
         /* SVG Styles */
@@ -501,7 +512,7 @@
 
         <div class="user-area">
             <span>Docent</span>
-            <a href="logout.php" class="logout">
+            <a href="#" class="logout">
                 <svg width="16" height="16" viewBox="0 0 24 24">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                     <polyline points="16 17 21 12 16 7"/>
@@ -516,7 +527,7 @@
     <nav class="menu">
         <ul class="menu-list">
             <li class="menu-item">
-                <a href="index.html">
+                <a href="#" class="selected">
                     <svg width="18" height="18" viewBox="0 0 24 24">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                         <polyline points="9 22 9 12 15 12 15 22"/>
@@ -525,7 +536,7 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="tickets.html">
+                <a href="#">
                     <svg width="18" height="18" viewBox="0 0 24 24">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                         <polyline points="14 2 14 8 20 8"/>
@@ -544,405 +555,345 @@
                     Profile
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="Klassen Beheer" class="selected">
-                    <svg width="18" height="18" viewBox="0 0 24 24">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                        <circle cx="12" cy="7" r="4"/>
-                    </svg>
-                    Klassen Beheer
-                </a>
-            </li>
         </ul>
     </nav>
 
-    <!-- Main Content: Classes Management -->
+    <!-- Main Content -->
     <main class="main-content">
-        <section class="page-header">
-            <div class="header-flex">
+        <section class="welcome-box">
+            <div class="header-section">
                 <div>
-                    <h2 class="page-heading">Klassen Beheer</h2>
-                    <p class="page-subheading">Beheer je klassen en studenten</p>
+                    <h2 class="welcome-heading">Klassen Beheer</h2>
+                    <p class="welcome-paragraph">Beheer je klassen en studenten</p>
                 </div>
-                <a href="add_class.php" class="add-class-btn">
+                <button id="addClassBtn" class="add-class-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24">
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
                     Nieuwe Klas
-                </a>
-            </div>
-        </section>
-
-        <div class="classes-grid">
-            <!-- Class A -->
-            <div class="class-card">
-                <div class="class-header">
-                    <div class="class-info">
-                        <div class="class-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        <div class="class-details">
-                            <h3>Klas A</h3>
-                            <p class="class-count">10 studenten</p>
-                        </div>
-                    </div>
-                    <div class="class-actions">
-                        <a href="edit_class.php?id=class-a" class="edit-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </a>
-                        <a href="delete_class.php?id=class-a" class="delete-btn" onclick="return confirm('Weet je zeker dat je deze klas wilt verwijderen?')">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="students-list">
-                    <div class="student-item">
-                        <span>Guillian Anyanwu</span>
-                        <a href="delete_student.php?class=class-a&id=student-1" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Mario Busby</span>
-                        <a href="delete_student.php?class=class-a&id=student-3" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Pheadon Cameron</span>
-                        <a href="delete_student.php?class=class-a&id=student-5" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Chassidy Doest</span>
-                        <a href="delete_student.php?class=class-a&id=student-7" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Ronaldo Hek</span>
-                        <a href="delete_student.php?class=class-a&id=student-9" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Rick Mali</span>
-                        <a href="delete_student.php?class=class-a&id=student-11" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Yshan Ho</span>
-                        <a href="delete_student.php?class=class-a&id=student-13" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Youssuf El Fakiri</span>
-                        <a href="delete_student.php?class=class-a&id=student-14" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Dinand Van Unen</span>
-                        <a href="delete_student.php?class=class-a&id=student-15" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Jahro Van Der Berg</span>
-                        <a href="delete_student.php?class=class-a&id=student-16" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <!-- Inline add student form for this class -->
-                <form action="add_student.php" method="post" class="add-student-form">
-                    <input type="hidden" name="class_id" value="class-a">
-                    <input type="text" name="student_name" placeholder="Voer studentnaam in" class="form-input add-student-input" required>
-                    <button type="submit" class="add-student-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24">
-                            <line x1="12" y1="5" x2="12" y2="19"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
-                        Toevoegen
-                    </button>
-                </form>
+                </button>
             </div>
 
-            <!-- Class B -->
-            <div class="class-card">
-                <div class="class-header">
-                    <div class="class-info">
-                        <div class="class-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
-                        <div class="class-details">
-                            <h3>Klas B</h3>
-                            <p class="class-count">10 studenten</p>
-                        </div>
-                    </div>
-                    <div class="class-actions">
-                        <a href="edit_class.php?id=class-b" class="edit-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-                        </a>
-                        <a href="delete_class.php?id=class-b" class="delete-btn" onclick="return confirm('Weet je zeker dat je deze klas wilt verwijderen?')">
-                            <svg width="18" height="18" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="students-list">
-                    <!-- Students for Class B -->
-                    <div class="student-item">
-                        <span>Lebron James</span>
-                        <a href="delete_student.php?class=class-b&id=student-17" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Kobe Bryant</span>
-                        <a href="delete_student.php?class=class-b&id=student-18" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Michael Jordan</span>
-                        <a href="delete_student.php?class=class-b&id=student-19" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Shaquille O'Neal</span>
-                        <a href="delete_student.php?class=class-b&id=student-20" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Magic Johnson</span>
-                        <a href="delete_student.php?class=class-b&id=student-21" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Larry Bird</span>
-                        <a href="delete_student.php?class=class-b&id=student-22" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Bill Russell</span>
-                        <a href="delete_student.php?class=class-b&id=student-23" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Wilt Chamberlain</span>
-                        <a href="delete_student.php?class=class-b&id=student-24" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Kareem Abdul-Jabbar</span>
-                        <a href="delete_student.php?class=class-b&id=student-25" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="student-item">
-                        <span>Tim Duncan</span>
-                        <a href="delete_student.php?class=class-b&id=student-26" class="delete-student-btn" onclick="return confirm('Verwijder student?')">
-                            <svg width="16" height="16" viewBox="0 0 24 24">
-                                <path d="M3 6h18v2H3z"/>
-                                <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                                <path d="M9 11v6"/>
-                                <path d="M15 11v6"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <form action="add_student.php" method="post" class="add-student-form">
-                    <input type="hidden" name="class_id" value="class-b">
-                    <input type="text" name="student_name" placeholder="Voer studentnaam in" class="form-input add-student-input" required>
-                    <button type="submit" class="add-student-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24">
-                            <line x1="12" y1="5" x2="12" y2="19"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
-                        Toevoegen
-                    </button>
-                </form>
-            </div>
-
-            <!-- Class C and D similar, abbreviated -->
-            <!-- Add full for C and D in actual file -->
-        </div>
-
-        <!-- Add Class Form (static for PHP) -->
-        <section class="form-section">
-            <h3 class="form-title">Nieuwe Klas Toevoegen</h3>
-            <form action="add_class.php" method="post">
-                <div class="form-group">
-                    <label class="form-label">Klas Naam</label>
-                    <input type="text" name="class_name" placeholder="Bijv. Klas E" class="form-input" required>
-                </div>
-                <div class="button-group">
-                    <button type="submit" class="submit-btn">Toevoegen</button>
-                    <a href="#" class="cancel-btn">Annuleren</a>
-                </div>
-            </form>
-        </section>
-
-        <!-- Example Edit Form for Class A (link to full edit page in PHP) -->
-        <section class="form-section">
-            <h3 class="form-title">Klas Bewerken (Voorbeeld voor Klas A)</h3>
-            <form action="update_class.php" method="post">
-                <input type="hidden" name="class_id" value="class-a">
-                <div class="form-group">
-                    <label class="form-label">Klas Naam Wijzigen</label>
-                    <input type="text" name="new_name" value="Klas A" class="form-input">
-                    <button type="submit" class="submit-btn" style="margin-top: 8px; width: auto;">Wijzigen</button>
-                </div>
-            </form>
-            <h4 class="form-title" style="margin-top: 24px;">Student Toevoegen (Inline boven)</h4>
-            <p>Gebruik het formulier in de klas card om studenten toe te voegen.</p>
-            <div class="students-form-list">
-                <!-- Current students with delete -->
-                <div class="student-form-item">
-                    <span>Guillian Anyanwu</span>
-                    <a href="delete_student.php?class=class-a&id=student-1" class="delete-student-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24">
-                            <path d="M3 6h18v2H3z"/>
-                            <path d="m19 10-1.5 7.5a2 2 0 0 1-2 1.5H6a2 2 0 0 1-2-1.5L5 10"/>
-                            <path d="M9 11v6"/>
-                            <path d="M15 11v6"/>
-                        </svg>
-                    </a>
-                </div>
-                <!-- ... -->
+            <div id="classesGrid" class="classes-grid">
+                <!-- Classes will be populated by JS -->
             </div>
         </section>
     </main>
+
+    <!-- Add Class Modal -->
+    <div id="addClassModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Nieuwe Klas Toevoegen</h3>
+                <button id="closeAddModal" class="close-btn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Klas Naam</label>
+                <input type="text" id="newClassInput" class="form-input" placeholder="Bijv. Klas E">
+            </div>
+            <div class="btn-group">
+                <button id="addClassConfirm" class="primary-btn">Toevoegen</button>
+                <button id="cancelAdd" class="secondary-btn">Annuleren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Class Modal -->
+    <div id="editClassModal" class="modal edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="editModalTitle" class="modal-title">Klas Bewerken</h3>
+                <button id="closeEditModal" class="close-btn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Klas Naam Wijzigen</label>
+                <div class="add-student-group">
+                    <input type="text" id="editClassInput" class="form-input" placeholder="Huidige naam">
+                    <button id="updateClassName" class="primary-btn">Wijzigen</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Student Toevoegen</label>
+                <div class="add-student-group">
+                    <input type="text" id="newStudentInput" class="form-input" placeholder="Voer studentnaam in">
+                    <button id="addStudentBtn" class="add-student-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Toevoegen
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label id="studentsLabel" class="form-label">Studenten</label>
+                <div id="editStudentsList" class="students-edit-list">
+                    <!-- Students will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structure (hardcoded, editable for PHP/SQL integration)
+        let classes = [
+            {
+                id: 'class-a',
+                name: 'Klas A',
+                students: [
+                    { id: 'student-1', name: 'Guillian Anyanwu' },
+                    { id: 'student-3', name: 'Mario Busby' },
+                    { id: 'student-5', name: 'Pheadon Cameron' },
+                    { id: 'student-7', name: 'Chassidy Doest' },
+                    { id: 'student-9', name: 'Ronaldo Hek' },
+                    { id: 'student-11', name: 'Rick Mali' },
+                    { id: 'student-13', name: 'Yshan Ho' },
+                    { id: 'student-14', name: 'Youssuf El Fakiri' },
+                    { id: 'student-15', name: 'Dinand Van Unen' },
+                    { id: 'student-16', name: 'Jahro Van Der Berg' }
+                ]
+            },
+            {
+                id: 'class-b',
+                name: 'Klas B',
+                students: [
+                    { id: 'student-17', name: 'Lebron James' },
+                    { id: 'student-18', name: 'Justin Bieber' },
+                    { id: 'student-19', name: 'Michael Jordan' },
+                    { id: 'student-20', name: 'George Floyd' },
+                    { id: 'student-21', name: 'Cardi B' },
+                    { id: 'student-22', name: 'Drake' },
+                    { id: 'student-23', name: 'Travis Scott' },
+                    { id: 'student-24', name: 'Playboi Carti' },
+                    { id: 'student-25', name: 'Kai Cenat' },
+                    { id: 'student-26', name: 'Rakai' }
+                ]
+            },
+            {
+                id: 'class-c',
+                name: 'Klas C',
+                students: [
+                    { id: 'student-27', name: 'Stephen Curry' },
+                    { id: 'student-28', name: 'Banaan Met Mayo' },
+                    { id: 'student-29', name: 'Kylie Jenner' },
+                    { id: 'student-30', name: 'P Diddy' },
+                    { id: 'student-31', name: 'Beyoncé' },
+                    { id: 'student-32', name: 'Rihanna' },
+                    { id: 'student-33', name: 'Taylor Swift' },
+                    { id: 'student-34', name: 'Kanye West' },
+                    { id: 'student-35', name: 'Adele' },
+                    { id: 'student-36', name: 'Elon Musk' }
+                ]
+            },
+            {
+                id: 'class-d',
+                name: 'Klas D',
+                students: [
+                    { id: 'student-37', name: 'Ariana Grande' },
+                    { id: 'student-38', name: 'Chris Brown' },
+                    { id: 'student-39', name: 'Selena Gomez' },
+                    { id: 'student-40', name: 'Nicki Minaj' }
+                ]
+            }
+        ];
+
+        let selectedClass = null;
+        let currentEditId = null;
+
+        // Render classes grid
+        function renderClasses() {
+            const grid = document.getElementById('classesGrid');
+            grid.innerHTML = '';
+            classes.forEach(cls => {
+                const classDiv = document.createElement('div');
+                classDiv.className = 'class-box';
+                classDiv.innerHTML = `
+                    <div class="class-header">
+                        <div class="class-info">
+                            <div class="class-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <div class="class-details">
+                                <h3>${cls.name}</h3>
+                                <p>${cls.students.length} studenten</p>
+                            </div>
+                        </div>
+                        <div class="class-actions">
+                            <button class="action-btn edit-btn" onclick="editClass('${cls.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteClass('${cls.id}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    <line x1="10" y1="11" x2="10" y2="17"/>
+                                    <line x1="14" y1="11" x2="14" y2="17"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="students-list">
+                        ${cls.students.length > 0 ? cls.students.map(student => `
+                            <div class="student-item">
+                                <span>${student.name}</span>
+                            </div>
+                        `).join('') : '<p class="no-students">Geen studenten in deze klas</p>'}
+                    </div>
+                `;
+                grid.appendChild(classDiv);
+            });
+        }
+
+        // Add class
+        function addClass() {
+            const name = document.getElementById('newClassInput').value.trim();
+            if (name) {
+                const newClass = {
+                    id: 'class-' + Date.now(),
+                    name: name,
+                    students: []
+                };
+                classes.push(newClass);
+                renderClasses();
+                closeAddModal();
+            }
+        }
+
+        // Edit class
+        function editClass(id) {
+            selectedClass = classes.find(c => c.id === id);
+            if (selectedClass) {
+                currentEditId = id;
+                document.getElementById('editClassInput').value = selectedClass.name;
+                document.getElementById('editModalTitle').textContent = `Klas Bewerken: ${selectedClass.name}`;
+                document.getElementById('studentsLabel').textContent = `Studenten in ${selectedClass.name} (${selectedClass.students.length})`;
+                renderEditStudents();
+                document.getElementById('editClassModal').classList.add('show');
+            }
+        }
+
+        // Render edit students
+        function renderEditStudents() {
+            const list = document.getElementById('editStudentsList');
+            list.innerHTML = selectedClass.students.length > 0 ? selectedClass.students.map(student => `
+                <div class="student-edit-item">
+                    <span>${student.name}</span>
+                    <button class="remove-student-btn" onclick="removeStudent('${student.id}')">
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </button>
+                </div>
+            `).join('') : '<p class="no-students" style="text-align: center; padding: 16px;">Geen studenten in deze klas</p>';
+        }
+
+        // Update class name
+        function updateClassName() {
+            const name = document.getElementById('editClassInput').value.trim();
+            if (name && selectedClass) {
+                selectedClass.name = name;
+                classes = classes.map(c => c.id === currentEditId ? selectedClass : c);
+                renderClasses();
+                closeEditModal();
+            }
+        }
+
+        // Add student
+        function addStudent() {
+            const name = document.getElementById('newStudentInput').value.trim();
+            if (name && selectedClass) {
+                const newStudent = {
+                    id: 'student-' + Date.now(),
+                    name: name
+                };
+                selectedClass.students.push(newStudent);
+                classes = classes.map(c => c.id === currentEditId ? selectedClass : c);
+                document.getElementById('newStudentInput').value = '';
+                renderEditStudents();
+                document.getElementById('studentsLabel').textContent = `Studenten in ${selectedClass.name} (${selectedClass.students.length})`;
+                renderClasses(); // Fixed: Update main grid count
+            }
+        }
+
+        // Remove student
+        function removeStudent(id) {
+            if (selectedClass) {
+                selectedClass.students = selectedClass.students.filter(s => s.id !== id);
+                classes = classes.map(c => c.id === currentEditId ? selectedClass : c);
+                renderEditStudents();
+                document.getElementById('studentsLabel').textContent = `Studenten in ${selectedClass.name} (${selectedClass.students.length})`;
+                renderClasses(); // Fixed: Update main grid count
+            }
+        }
+
+        // Delete class
+        function deleteClass(id) {
+            if (confirm('Weet je zeker dat je deze klas wilt verwijderen?')) {
+                classes = classes.filter(c => c.id !== id);
+                renderClasses();
+            }
+        }
+
+        // Modal functions
+        function openAddModal() {
+            document.getElementById('addClassModal').classList.add('show');
+            document.getElementById('newClassInput').value = '';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addClassModal').classList.remove('show');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editClassModal').classList.remove('show');
+            selectedClass = null;
+            currentEditId = null;
+            document.getElementById('newStudentInput').value = '';
+            document.getElementById('editClassInput').value = '';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClasses();
+
+            // Add class modal
+            document.getElementById('addClassBtn').addEventListener('click', openAddModal);
+            document.getElementById('addClassConfirm').addEventListener('click', addClass);
+            document.getElementById('cancelAdd').addEventListener('click', closeAddModal);
+            document.getElementById('closeAddModal').addEventListener('click', closeAddModal);
+
+            // Edit class modal
+            document.getElementById('updateClassName').addEventListener('click', updateClassName);
+            document.getElementById('addStudentBtn').addEventListener('click', addStudent);
+            document.getElementById('closeEditModal').addEventListener('click', closeEditModal);
+
+            // Close modals on outside click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', e => {
+                    if (e.target === modal) {
+                        if (modal.id === 'addClassModal') closeAddModal();
+                        else closeEditModal();
+                    }
+                });
+            });
+
+            // Enter key support
+            document.getElementById('newClassInput').addEventListener('keypress', e => { if (e.key === 'Enter') addClass(); });
+            document.getElementById('editClassInput').addEventListener('keypress', e => { if (e.key === 'Enter') updateClassName(); });
+            document.getElementById('newStudentInput').addEventListener('keypress', e => { if (e.key === 'Enter') addStudent(); });
+        });
+    </script>
 </body>
 </html>
