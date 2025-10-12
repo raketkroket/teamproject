@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Planning Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Montserrat", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 200;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #f1efe7, #f3f4f6);
+            padding: 20px;
+            color: #1f2937;
+        }
+
+        /* Header Styles for Student */
+        .top-bar {
+            background: linear-gradient(to right, #f1efe7, #d5d3cc);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            max-height: 120px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-box {
+            width: 220px;
+            height: 100px;
+            background: linear-gradient(to bottom right, #221cda, #2563eb);
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .page-title {
+            font-size: 24px;
+            color: #1f2937;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .logout {
+            color: #221cda;
+            font-weight: 400;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .logout:hover {
+            color: #2563eb;
+        }
+
+        /* Navigation Styles */
+        .menu {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .menu-list {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #1f2937;
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .menu-item a.selected {
+            color: #221cda;
+            opacity: 1;
+        }
+
+        .menu-item a:hover {
+            color: #2563eb;
+            opacity: 1;
+        }
+
+        /* Main Content Styles for Student Home */
+        .main-content {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .welcome-box {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .welcome-heading {
+            font-size: 30px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .welcome-paragraph {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .progress-section {
+            background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: #d1d5db;
+            border-radius: 9999px;
+            height: 16px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(to right, #221cda, #2563eb);
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.5s ease;
+            width: 60%; /* 12/20 = 60% */
+        }
+
+        .progress-note {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        .stats-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .stats-area {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .stats-area {
+                flex-direction: row;
+            }
+        }
+
+        .stat-box {
+            background: linear-gradient(to bottom right, #eff6ff, #dbeafe);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #bfdbfe;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stat-icon-area {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon-area svg {
+            color: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        .total-icon {
+            background: linear-gradient(to bottom right, #3b82f6, #2563eb);
+        }
+
+        .completed-icon {
+            background: linear-gradient(to bottom right, #10b981, #059669);
+        }
+
+        .scheduled-icon {
+            background: linear-gradient(to bottom right, #f59e0b, #d97706);
+        }
+
+        .open-icon {
+            background: linear-gradient(to bottom right, #ef4444, #dc2626);
+        }
+
+        .stat-details p:first-child {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stat-details p:last-child {
+            font-size: 24px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .content-area {
+                flex-direction: row;
+            }
+        }
+
+        .panel-box {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .panel-heading {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-heading svg {
+            width: 22px;
+            height: 22px;
+            color: #221cda;
+        }
+
+        .planning-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .planning-day {
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .planning-day:hover {
+            background: #f3f4f6;
+        }
+
+        .day-title {
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .day-tickets {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-left: 16px;
+        }
+
+        .day-ticket {
+            font-size: 14px;
+            color: #6b7280;
+            list-style-type: disc;
+        }
+
+        .no-tickets {
+            font-size: 14px;
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .tickets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ticket-item {
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+            border-left: 4px solid #221cda;
+        }
+
+        .ticket-item:hover {
+            background: #f3f4f6;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .ticket-title {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .ticket-subject {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .status-tag {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            color: white;
+            font-weight: 400;
+        }
+
+        .status-open {
+            background: #10b981;
+        }
+
+        .status-scheduled {
+            background: #f59e0b;
+        }
+
+        .status-completed {
+            background: #3b82f6;
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .ticket-hours {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ticket-deadline {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .update-section {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .update-heading {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .update-inner {
+            background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .update-text {
+            color: #374151;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        .choice-button {
+            padding: 8px 24px;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 400;
+            transition: box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .choice-button:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .yes-button {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+
+        .no-button {
+            background: linear-gradient(to right, #ef4444, #dc2626);
+        }
+
+        .textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .textarea:focus {
+            outline: none;
+            ring: 2px solid #221cda;
+            border-color: transparent;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #221cda, #2563eb);
+            color: white;
+            border-radius: 8px;
+            border: none;
+            font-weight: 400;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .submit-button:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* SVG Styles */
+        svg {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body>
+    <!-- Student Header -->
+    <header class="top-bar">
+        <div class="logo-area">
+            <div class="logo-box">
+                <span class="logo-text">LOGO</span>
+            </div>
+        </div>
+
+        <h1 class="page-title">Mijn Planning</h1>
+
+        <div class="user-area">
+            <span>Student</span>
+            <a href="#" class="logout">
+                <svg width="16" height="16" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                Uitloggen
+            </a>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="menu">
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#" class="selected">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    Tickets
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#">
+                    <svg width="18" height="18" viewBox="0 0 24 24">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    Profile
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Student Home Content -->
+    <main class="main-content">
+        <section class="welcome-box">
+            <h2 class="welcome-heading">Mijn Planning</h2>
+            <p class="welcome-paragraph">Beheer je wekelijkse planning en houd je voortgang bij</p>
+
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h3 class="progress-title">Wekelijkse Voortgang</h3>
+                    <span class="progress-text">12 / 20 uur</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <p class="progress-note">Je hebt 8 uur over deze week</p>
+            </div>
+
+            <div class="stats-area">
+                <!-- Total Tickets -->
+                <div class="stat-box">
+                    <div class="stat-icon-area total-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 12h18"/>
+                            <path d="M12 3v18"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <p>Totaal Tickets</p>
+                        <p>4</p>
+                    </div>
+                </div>
+
+                <!-- Completed -->
+                <div class="stat-box">
+                    <div class="stat-icon-area completed-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22,4 12,14.01 9,11.01"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <p>Afgerond</p>
+                        <p>1</p>
+                    </div>
+                </div>
+
+                <!-- Scheduled -->
+                <div class="stat-box">
+                    <div class="stat-icon-area scheduled-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <p>Gepland</p>
+                        <p>1</p>
+                    </div>
+                </div>
+
+                <!-- Open -->
+                <div class="stat-box">
+                    <div class="stat-icon-area open-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="15" y1="9" x2="9" y2="15"/>
+                            <line x1="9" y1="9" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <div class="stat-details">
+                        <p>Open</p>
+                        <p>2</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-area">
+            <!-- Weekly Planning -->
+            <div class="panel-box">
+                <h3 class="panel-heading">
+                    <svg viewBox="0 0 24 24" width="22" height="22">
+                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Mijn Wekelijkse Planning
+                </h3>
+                <div class="planning-list">
+                    <div class="planning-day">
+                        <p class="day-title">Maandag</p>
+                        <ul class="day-tickets">
+                            <li class="day-ticket">PHP Project - 2 uur</li>
+                            <li class="day-ticket">Yahtzee - 2 uur</li>
+                        </ul>
+                    </div>
+                    <div class="planning-day">
+                        <p class="day-title">Dinsdag</p>
+                        <ul class="day-tickets">
+                            <li class="day-ticket">Fullstack - 3 uur</li>
+                        </ul>
+                    </div>
+                    <div class="planning-day">
+                        <p class="day-title">Woensdag</p>
+                        <ul class="day-tickets">
+                            <li class="day-ticket">PHP Project - 2 uur</li>
+                        </ul>
+                    </div>
+                    <div class="planning-day">
+                        <p class="day-title">Donderdag</p>
+                        <ul class="day-tickets">
+                            <li class="day-ticket">Yahtzee - 2 uur</li>
+                            <li class="day-ticket">Engels - 1 uur</li>
+                        </ul>
+                    </div>
+                    <div class="planning-day">
+                        <p class="day-title">Vrijdag</p>
+                        <ul class="day-tickets">
+                            <li class="day-ticket">Fullstack - 3 uur</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Tickets -->
+            <div class="panel-box">
+                <h3 class="panel-heading">
+                    <svg viewBox="0 0 24 24" width="22" height="22">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12,8 8,12 12,16"/>
+                        <line x1="16" y1="12" x2="20" y2="12"/>
+                    </svg>
+                    Mijn Tickets
+                </h3>
+                <div class="tickets-list">
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <p class="ticket-title">PHP Project</p>
+                                <p class="ticket-subject">Backend Development</p>
+                            </div>
+                            <span class="status-tag status-open">Open</span>
+                        </div>
+                        <div class="ticket-footer">
+                            <span class="ticket-hours">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                8 uur
+                            </span>
+                            <span class="ticket-deadline">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                20-10-2025
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <p class="ticket-title">Yahtzee Project</p>
+                                <p class="ticket-subject">Frontend Development</p>
+                            </div>
+                            <span class="status-tag status-scheduled">Gepland</span>
+                        </div>
+                        <div class="ticket-footer">
+                            <span class="ticket-hours">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                6 uur
+                            </span>
+                            <span class="ticket-deadline">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                09-01-2026
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <p class="ticket-title">Engels Examen</p>
+                                <p class="ticket-subject">Engels</p>
+                            </div>
+                            <span class="status-tag status-completed">Afgerond</span>
+                        </div>
+                        <div class="ticket-footer">
+                            <span class="ticket-hours">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                4 uur
+                            </span>
+                            <span class="ticket-deadline">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                30-08-2025
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div>
+                                <p class="ticket-title">Fullstack Project</p>
+                                <p class="ticket-subject">Full Stack</p>
+                            </div>
+                            <span class="status-tag status-open">Open</span>
+                        </div>
+                        <div class="ticket-footer">
+                            <span class="ticket-hours">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                10 uur
+                            </span>
+                            <span class="ticket-deadline">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                10-05-2026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="update-section">
+            <h3 class="update-heading">Planning Bijwerken</h3>
+            <div class="update-inner">
+                <p class="update-text">Heb je je wekelijkse planning behaald? Laat het ons weten en maak een nieuwe planning voor volgende week.</p>
+                <div class="form-group">
+                    <label class="form-label">Heb je je planning deze week gehaald?</label>
+                    <div class="button-group">
+                        <button class="choice-button yes-button">Ja</button>
+                        <button class="choice-button no-button">Nee</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Waarom niet? (optioneel)</label>
+                    <textarea class="textarea" rows="3" placeholder="Vertel ons waarom je je planning niet hebt gehaald..."></textarea>
+                </div>
+                <button class="submit-button">Planning Indienen & Nieuwe Week Plannen</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
