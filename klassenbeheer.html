@@ -73,7 +73,13 @@
             font-size: 14px;
             color: #1f2937;
         }
-
+ header img.logo {
+            width: 220px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid #ffffff20;
+        }
         .logout {
             color: #221cda;
             font-weight: 400;
@@ -502,10 +508,9 @@
 <body>
     <!-- Header -->
     <header class="top-bar">
-        <div class="logo-area">
-            <div class="logo-box">
-                <span class="logo-text">LOGO</span>
-            </div>
+       <div class="logo-container">
+            <img src="logo.png" alt="School Logo" class="logo">
+        </div>
         </div>
 
         <h1 class="page-title">Ticketbeheer</h1>
