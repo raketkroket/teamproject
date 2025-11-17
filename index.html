@@ -3,7 +3,8 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Homepage</title>
@@ -464,7 +465,8 @@
     <main class="main-content">
         <section class="welcome-section">
             <h2 class="welcome-title">Welkom bij Ticketbeheer</h2>
-            <p class="welcome-text">Beheer vakken, opdrachten en studenten planningen met gemak</p>
+            <p class="welcome-text">Beheer vakken, opdrachten en
+studenten planningen met gemak</p>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon total-tickets-icon">📄</div>
@@ -506,7 +508,8 @@
                     <div class="activity-item">
                         <div class="activity-details">
                             <p class="activity-name">Yahtzee</p>
-                            <p class="activity-desc">Status gewijzigd naar gepland</p>
+                            <p class="activity-desc">Status gewijzigd
+naar gepland</p>
                         </div>
                         <span class="activity-time">5 uur geleden</span>
                     </div>
@@ -538,27 +541,71 @@
                             <p class="deadline-name">Engels Examen</p>
                             <p class="deadline-date">30-08-2025</p>
                         </div>
-                        <span class="status-badge status-completed">Afgerond</span>
+                        <span class="status-badge
+status-completed">Afgerond</span>
                     </div>
                     <div class="deadline-item">
                         <div class="deadline-details">
                             <p class="deadline-name">Yahtzee Project</p>
                             <p class="deadline-date">09-01-2026</p>
                         </div>
-                        <span class="status-badge status-planned">Is gepland</span>
+                        <span class="status-badge status-planned">Is
+gepland</span>
                     </div>
                 </div>
             </section>
         </div>
 
-        <section class="quick-actions-section">
-            <h3 class="quick-actions-title">Snelle Acties</h3>
-            <div class="actions-grid">
-                <a href="#" class="action-button add-ticket-btn">Nieuw Ticket Toevoegen</a>
-                <a href="klassenbeheer.html" class="action-button students-overview-btn">Studenten Overzicht</a>
-                <a href="#" class="action-button manage-subjects-btn">Vakken Beheren</a>
-            </div>
-        </section>
+<section class="quick-actions-section">
+    <h3 class="quick-actions-title">Snelle Acties</h3>
+    <div class="actions-grid">
+        <a href="tickets.html" class="action-button
+add-ticket-btn">Nieuw Ticket Toevoegen</a>
+        <a href="klassenbeheer.html" class="action-button
+students-overview-btn">Studenten Overzicht</a>
+        <button id="manageSubjectsBtn" class="action-button
+manage-subjects-btn">Vakken Beheren</button>
+    </div>
+</section>
+
+<!-- Verborgen overzicht van vakken -->
+<section id="subjectsSection" style="display:none; margin-top:20px;">
+    <h3 class="quick-actions-title">Vakken Overzicht</h3>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon students-icon">🧮</div>
+            <p class="stat-label">Wiskunde</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon total-tickets-icon">💻</div>
+            <p class="stat-label">Informatica</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon completed-icon">📘</div>
+            <p class="stat-label">Engels</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon planned-icon">🧪</div>
+            <p class="stat-label">Natuurkunde</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Functie om de vakkenlijst te tonen/verbergen
+    document.getElementById('manageSubjectsBtn').addEventListener('click',
+function() {
+        const section = document.getElementById('subjectsSection');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            this.textContent = 'Verberg Vakken';
+        } else {
+            section.style.display = 'none';
+            this.textContent = 'Vakken Beheren';
+        }
+    });
+</script>
+
     </main>
 </body>
 </html>
